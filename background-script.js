@@ -16,13 +16,39 @@ function getText() {
   return div.innerHTML; // Return the actual HTML
 }
 
+/**
+ * @param {string} text
+ * @returns {string}
+ */
 function toMarkdown(text) {
+  String.prototype.__replaceTag = function (tag, replacement) {
+    return this.replaceAll(`<${tag}>`, replacement).replaceAll(
+      `</${tag}>`,
+      replacement
+    );
+  };
+
   return text
-    .replace("</p>\n<p>", "\n> \n> ")
-    .replace("<p>", "")
-    .replace("</p>", "")
-    .replace("<em>", "_")
-    .replace("</em>", "_");
+    .replaceAll("</p>\n<p>", "\n> \n> ")
+    .replaceAll(
+      /<span style="text-decoration: underline;">([^<]*)<\/span>/g,
+      (_, inner) => `__${inner}__`
+    )
+    .replaceAll(
+      /<span style="text-decoration: line-through;">([^<]*)<\/span>/g,
+      (_, inner) => `~~${inner}~~`
+    )
+    .replaceAll(
+      /<span style="color: #[0-9a-f]*;">([^<]*)<\/span>/g,
+      (_, inner) => inner
+    )
+    .replaceAll(
+      /<a(?: title="[^"]*")? href="([^"]*)"(?: [a-z]*="[^"]*")*>([^<]*)<\/a>/g,
+      (_, href, label) => `[${label}](${href})`
+    )
+    .__replaceTag("p", "")
+    .__replaceTag("em", "_")
+    .__replaceTag("strong", "**");
 }
 
 async function formattedCopy() {
@@ -31,12 +57,14 @@ async function formattedCopy() {
     target: { tabId: tab.id },
     func: getText,
   });
-  const formatted = `> ${toMarkdown(result)}\n`;
+  const formatted = `> ${toMarkdown(result.trim())}\n`;
   await navigator.clipboard.writeText(formatted);
   console.log(formatted);
 }
 
-browser.runtime.onInstalled.addListener((reason) => {
+browser.runtime.onInstalled.addListener(() => {
+  console.clear();
+
   browser.contextMenus.create({
     id: "formatted-copy",
     title: "Copy with Discord formatting",
@@ -52,7 +80,6 @@ browser.runtime.onInstalled.addListener((reason) => {
   });
 
   browser.commands.onCommand.addListener(async (command) => {
-    console.log(command);
     switch (command) {
       case "formatted-copy":
         await formattedCopy();

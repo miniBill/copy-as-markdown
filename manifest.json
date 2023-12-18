@@ -15,8 +15,8 @@
     "commands": {
         "formatted-copy": {
             "suggested_key": {
-                "default": "Ctrl+Shift+X",
-                "mac": "Command+Shift+X"
+                "default": "Ctrl+Shift+F",
+                "mac": "Command+Shift+F"
             },
             "description": "Copy the selected text, with Discord formatting"
         }
