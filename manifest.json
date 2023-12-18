@@ -1,5 +1,5 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Formatted copy",
     "version": "1.0",
     "description": "Copy from the glowfic website, with formatting",
@@ -9,13 +9,22 @@
     "permissions": [
         "activeTab",
         "contextMenus",
-        "clipboardWrite"
+        "clipboardWrite",
+        "scripting"
     ],
+    "commands": {
+        "formatted-copy": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+X",
+                "mac": "Command+Shift+X"
+            },
+            "description": "Copy the selected text, with Discord formatting"
+        }
+    },
     "background": {
         "scripts": [
             "background-script.js"
         ],
-        "persistent": false,
         "type": "module"
     },
     "browser_specific_settings": {
