@@ -22,10 +22,10 @@ function getText() {
  */
 function toMarkdown(text) {
   String.prototype.__replaceTag = function (tag, replacement) {
-    return this.replaceAll(`<${tag}>`, replacement).replaceAll(
-      `</${tag}>`,
-      replacement
-    );
+    return this.replaceAll(`<${tag}> `, ` ${replacement}`)
+      .replaceAll(`<${tag}>`, replacement)
+      .replaceAll(` </${tag}>`, `${replacement} `)
+      .replaceAll(`</${tag}>`, replacement);
   };
 
   return text
@@ -46,6 +46,7 @@ function toMarkdown(text) {
       /<a(?: title="[^"]*")? href="([^"]*)"(?: [a-z]*="[^"]*")*>([^<]*)<\/a>/g,
       (_, href, label) => `[${label}](${href})`
     )
+    .replaceAll("&nbsp;", " ")
     .__replaceTag("p", "")
     .__replaceTag("em", "_")
     .__replaceTag("strong", "**");
