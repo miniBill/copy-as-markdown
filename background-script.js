@@ -72,7 +72,7 @@ browser.runtime.onInstalled.addListener(() => {
     contexts: ["selection"],
   });
 
-  browser.contextMenus.onClicked.addListener(async (info, tab) => {
+  browser.contextMenus.onClicked.addListener(async (info) => {
     switch (info.menuItemId) {
       case "copy-as-markdown":
         await formattedCopy();
