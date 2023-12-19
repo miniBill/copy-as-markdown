@@ -67,14 +67,14 @@ browser.runtime.onInstalled.addListener(() => {
   console.clear();
 
   browser.contextMenus.create({
-    id: "formatted-copy",
+    id: "copy-as-markdown",
     title: "Copy with Discord formatting",
     contexts: ["selection"],
   });
 
   browser.contextMenus.onClicked.addListener(async (info, tab) => {
     switch (info.menuItemId) {
-      case "formatted-copy":
+      case "copy-as-markdown":
         await formattedCopy();
         break;
     }
@@ -82,7 +82,7 @@ browser.runtime.onInstalled.addListener(() => {
 
   browser.commands.onCommand.addListener(async (command) => {
     switch (command) {
-      case "formatted-copy":
+      case "copy-as-markdown":
         await formattedCopy();
         break;
     }

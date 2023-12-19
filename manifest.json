@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Formatted copy",
+    "name": "Copy as a Markdown quote",
     "version": "1.0",
-    "description": "Copy from the glowfic website, with formatting",
+    "description": "Copy the selected text as a Markdown quote",
     "icons": {
         "48": "icons/48.png",
         "96": "icons/96.png"
@@ -14,12 +14,12 @@
         "scripting"
     ],
     "commands": {
-        "formatted-copy": {
+        "copy-as-markdown": {
             "suggested_key": {
                 "default": "Ctrl+Shift+F",
                 "mac": "Command+Shift+F"
             },
-            "description": "Copy the selected text, with Discord formatting"
+            "description": "Copy the selected text as a Markdown quote"
         }
     },
     "background": {
