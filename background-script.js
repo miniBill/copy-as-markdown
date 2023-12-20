@@ -68,7 +68,7 @@ browser.runtime.onInstalled.addListener(() => {
 
   browser.contextMenus.create({
     id: "copy-as-markdown",
-    title: "Copy with Discord formatting",
+    title: "Copy as Markdown",
     contexts: ["selection"],
   });
 
