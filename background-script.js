@@ -1,4 +1,4 @@
-const browser = window.chrome || window["browser"];
+const browser = chrome || window["browser"];
 
 async function getCurrentTab() {
   // https://developer.chrome.com/docs/extensions/reference/api/tabs
@@ -14,6 +14,10 @@ function getText() {
   var div = document.createElement("div");
   div.appendChild(range.cloneContents()); // Get the document fragment from selected range
   return div.innerHTML; // Return the actual HTML
+}
+
+async function writeToClipboard(text) {
+  await navigator.clipboard.writeText(text);
 }
 
 /**
@@ -59,7 +63,11 @@ async function formattedCopy() {
     func: getText,
   });
   const formatted = `> ${toMarkdown(result.trim())}\n`;
-  await navigator.clipboard.writeText(formatted);
+  await browser.scripting.executeScript({
+    target: { tabId: tab.id },
+    func: writeToClipboard,
+    args: [formatted],
+  });
   console.log(formatted);
 }
 
