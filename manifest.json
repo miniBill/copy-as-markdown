@@ -23,10 +23,7 @@
         }
     },
     "background": {
-        "scripts": [
-            "background-script.js"
-        ],
-        "type": "module"
+        "service_worker": "background-script.js"
     },
     "browser_specific_settings": {
         "gecko": {
