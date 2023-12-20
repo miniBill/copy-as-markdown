@@ -1,3 +1,4 @@
 node_modules
 icons/*.png
-copy-as-markdown.xpi
+copy-as-markdown-firefox.xpi
+copy-as-markdown-chrome.zip
