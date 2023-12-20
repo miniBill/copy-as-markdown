@@ -53,7 +53,9 @@ function toMarkdown(text) {
     .replaceAll("&nbsp;", " ")
     .__replaceTag("p", "")
     .__replaceTag("em", "_")
-    .__replaceTag("strong", "**");
+    .__replaceTag("i", "_")
+    .__replaceTag("strong", "**")
+    .__replaceTag("b", "**");
 }
 
 async function formattedCopy() {
