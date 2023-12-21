@@ -51,6 +51,7 @@ function toMarkdown(text) {
       (_, href, label) => `[${label}](${href})`
     )
     .replaceAll("&nbsp;", " ")
+    .replaceAll("<br>", "\n> ")
     .__replaceTag("p", "")
     .__replaceTag("em", "_")
     .__replaceTag("i", "_")
