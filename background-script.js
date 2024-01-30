@@ -1,13 +1,5 @@
 const browser = chrome || window["browser"];
 
-async function getCurrentTab() {
-  // https://developer.chrome.com/docs/extensions/reference/api/tabs
-  let queryOptions = { active: true, lastFocusedWindow: true };
-  // `tab` will either be a `tabs.Tab` instance or `undefined`.
-  let [tab] = await browser.tabs.query(queryOptions);
-  return tab;
-}
-
 function getText() {
   // https://stackoverflow.com/a/40087980/1181553
   var range = window.getSelection().getRangeAt(0); // Get the selected range
@@ -61,8 +53,8 @@ function toMarkdown(text) {
     .replaceAll(/^-/g, () => "\\-");
 }
 
-async function formattedCopy() {
-  const tab = await getCurrentTab();
+/** @param {tabs.Tab} tab  */
+async function formattedCopy(tab) {
   const [{ result }] = await browser.scripting.executeScript({
     target: { tabId: tab.id },
     func: getText,
@@ -85,19 +77,19 @@ browser.runtime.onInstalled.addListener(() => {
     contexts: ["selection"],
   });
 
-  browser.contextMenus.onClicked.addListener(async (info) => {
-    switch (info.menuItemId) {
-      case "copy-as-markdown":
-        await formattedCopy();
-        break;
-    }
-  });
-
-  browser.commands.onCommand.addListener(async (command) => {
+  browser.commands.onCommand.addListener(async (command, tab) => {
     switch (command) {
       case "copy-as-markdown":
-        await formattedCopy();
+        await formattedCopy(tab);
         break;
     }
   });
+});
+
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
+  switch (info.menuItemId) {
+    case "copy-as-markdown":
+      await formattedCopy(tab);
+      break;
+  }
 });
