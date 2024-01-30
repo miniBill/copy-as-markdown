@@ -1,5 +1,13 @@
 const browser = chrome || window["browser"];
 
+async function getCurrentTab() {
+  // https://developer.chrome.com/docs/extensions/reference/api/tabs
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  // `tab` will either be a `tabs.Tab` instance or `undefined`.
+  let [tab] = await browser.tabs.query(queryOptions);
+  return tab;
+}
+
 function getText() {
   // https://stackoverflow.com/a/40087980/1181553
   var range = window.getSelection().getRangeAt(0); // Get the selected range
@@ -53,8 +61,11 @@ function toMarkdown(text) {
     .replaceAll(/^-/g, () => "\\-");
 }
 
-/** @param {chrome.tabs.Tab} tab  */
+/** @param {chrome.tabs.Tab | undefined} tab  */
 async function formattedCopy(tab) {
+  if (!tab) {
+    tab = await getCurrentTab();
+  }
   const [{ result }] = await browser.scripting.executeScript({
     target: { tabId: tab.id },
     func: getText,
