@@ -54,6 +54,7 @@ function toMarkdown(text) {
     .replaceAll("<br>", "\n> ")
     .__replaceTag("p", "")
     .__replaceTag("em", "_")
+    .__replaceTag("s", "~~")
     .__replaceTag("i", "_")
     .__replaceTag("strong", "**")
     .__replaceTag("b", "**");
