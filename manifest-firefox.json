@@ -13,6 +13,10 @@
         "clipboardWrite",
         "scripting"
     ],
+    "host_permissions": [
+        "*://glowfic.com/*",
+        "*://*.glowfic.com/*"
+    ],
     "commands": {
         "copy-as-markdown": {
             "suggested_key": {
