@@ -76,14 +76,14 @@ browser.runtime.onInstalled.addListener(() => {
     title: "Copy as Markdown",
     contexts: ["selection"],
   });
+});
 
-  browser.commands.onCommand.addListener(async (command, tab) => {
-    switch (command) {
-      case "copy-as-markdown":
-        await formattedCopy(tab);
-        break;
-    }
-  });
+browser.commands.onCommand.addListener(async (command, tab) => {
+  switch (command) {
+    case "copy-as-markdown":
+      await formattedCopy(tab);
+      break;
+  }
 });
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
