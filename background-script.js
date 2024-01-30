@@ -53,7 +53,7 @@ function toMarkdown(text) {
     .replaceAll(/^-/g, () => "\\-");
 }
 
-/** @param {tabs.Tab} tab  */
+/** @param {chrome.tabs.Tab} tab  */
 async function formattedCopy(tab) {
   const [{ result }] = await browser.scripting.executeScript({
     target: { tabId: tab.id },
