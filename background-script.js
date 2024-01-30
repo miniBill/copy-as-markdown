@@ -57,7 +57,8 @@ function toMarkdown(text) {
     .__replaceTag("s", "~~")
     .__replaceTag("i", "_")
     .__replaceTag("strong", "**")
-    .__replaceTag("b", "**");
+    .__replaceTag("b", "**")
+    .replaceAll(/^-/g, () => "\\-");
 }
 
 async function formattedCopy() {
