@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Copy as a Markdown quote",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Copy the selected text as a Markdown quote",
     "icons": {
         "48": "icons/48.png",
